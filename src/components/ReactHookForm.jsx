@@ -1,11 +1,13 @@
 import { useForm } from "react-hook-form";
 
 const ReactHookForm = () => {
-  const { register, handleSubmit, formState } = useForm();
-  const { errors } = formState;
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
 
   const onSubmit = (data) => {
-    // console.log(useForm());
     console.log(data);
   };
 
@@ -14,7 +16,9 @@ const ReactHookForm = () => {
       <h1 className="text-2xl font-bold mb-6 text-center text-gray-800">
         React Hook Form
       </h1>
+
       <form className="flex flex-col gap-4" onSubmit={handleSubmit(onSubmit)}>
+        {/* NAME */}
         <div className="flex flex-col">
           <label htmlFor="name" className="mb-1 font-medium text-gray-700">
             Name:
@@ -24,14 +28,13 @@ const ReactHookForm = () => {
             id="name"
             className="px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
             {...register("name", {
-              required: "name is required",
+              required: "Name is required",
             })}
           />
-          {errors.name && (
-            <p className="text-red-500">{errors.name?.message}</p>
-          )}
+          {errors.name && <p className="text-red-500">{errors.name.message}</p>}
         </div>
 
+        {/* EMAIL */}
         <div className="flex flex-col">
           <label htmlFor="email" className="mb-1 font-medium text-gray-700">
             Email:
@@ -53,6 +56,7 @@ const ReactHookForm = () => {
           )}
         </div>
 
+        {/* AGE */}
         <div className="flex flex-col">
           <label htmlFor="age" className="mb-1 font-medium text-gray-700">
             Age:
@@ -63,18 +67,41 @@ const ReactHookForm = () => {
             className="px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
             {...register("age", {
               valueAsNumber: true,
-              required: "age is required",
+              required: "Age is required",
               min: {
                 value: 18,
-                message: "Age Must be at least 18",
+                message: "Age must be at least 18",
               },
               max: {
                 value: 25,
-                message: "Age must be at least 25",
+                message: "Age must be at most 25",
               },
             })}
           />
           {errors.age && <p className="text-red-500">{errors.age.message}</p>}
+        </div>
+
+        {/* COUNTRY */}
+        <div className="flex flex-col">
+          <label htmlFor="country" className="mb-1 font-medium text-gray-700">
+            Country:
+          </label>
+          <select
+            id="country"
+            className="px-3 py-2 border rounded-lg"
+            {...register("country", {
+              required: "Country is required",
+            })}
+          >
+            <option value="">Select Country</option>
+            <option value="India">India</option>
+            <option value="Pakistan">Pakistan</option>
+            <option value="Bangladesh">Bangladesh</option>
+          </select>
+
+          {errors.country && (
+            <p className="text-red-500">{errors.country.message}</p>
+          )}
         </div>
 
         <button
