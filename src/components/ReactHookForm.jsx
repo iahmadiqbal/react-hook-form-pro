@@ -6,19 +6,40 @@ const ReactHookForm = () => {
     register,
     handleSubmit,
     formState: { errors },
-    watch,
+    // watch,
+    getValues,
+    setValue,
+    reset,
   } = useForm();
 
   const onSubmit = (data) => {
     console.log(data);
+    reset();
+  };
+
+  // to get values function
+  const GetFormValues = () => {
+    const values = getValues();
+    console.log(values);
+  };
+
+  // to show the errors in the form
+
+  const onError = (errors) => {
+    console.log("Error:", errors);
+  };
+  //  to set the value in the form
+
+  const SetValues = () => {
+    setValue("name", "Testing");
   };
 
   // const watchName = watch(["name", "email", "age"]);
-  const WatchName = watch();
+  // const WatchName = watch();
 
-  useEffect(() => {
-    console.log(WatchName);
-  }, [WatchName]);
+  // useEffect(() => {
+  //   console.log(WatchName);
+  // }, [WatchName]);
   return (
     <>
       {/* <p className="text-red-500">{JSON.stringify(WatchName)}</p> */}
@@ -27,7 +48,10 @@ const ReactHookForm = () => {
           React Hook Form
         </h1>
 
-        <form className="flex flex-col gap-4" onSubmit={handleSubmit(onSubmit)}>
+        <form
+          className="flex flex-col gap-4"
+          onSubmit={handleSubmit(onSubmit, onError)}
+        >
           {/* NAME */}
           <div className="flex flex-col">
             <label htmlFor="name" className="mb-1 font-medium text-gray-700">
@@ -176,6 +200,29 @@ const ReactHookForm = () => {
             className="mt-4 bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600 transition-colors"
           >
             Submit
+          </button>
+
+          <button
+            onClick={GetFormValues}
+            type="button"
+            className="mt-4 bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600 transition-colors"
+          >
+            Get Values
+          </button>
+
+          <button
+            onClick={SetValues}
+            type="button"
+            className="mt-4 bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600 transition-colors"
+          >
+            set Values
+          </button>
+          <button
+            type="button"
+            onClick={() => reset()}
+            className="bg-blue-500 text-white p-2 rounded"
+          >
+            Reset Form
           </button>
         </form>
       </div>
